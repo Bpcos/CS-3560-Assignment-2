@@ -1,7 +1,6 @@
 package Controller;
 
 import java.util.*;
-
 import Model.GameModel;
 import javafx.scene.input.KeyCode;
 
@@ -17,9 +16,11 @@ public class GameController {
     private final GameModel model;
     private final Set<KeyCode> activeKeys = new HashSet<>();
     private final Map<Actions, List<KeyCode>> inputMap;
+
     public GameController(GameModel model){
         this.model = model;
         this.inputMap = new EnumMap<>(Actions.class);
+        initializeKeybinds();
     }
 
     private void initializeKeybinds(){
@@ -28,7 +29,7 @@ public class GameController {
         inputMap.put(Actions.MOVE_LEFT, List.of(KeyCode.A, KeyCode.LEFT));
         inputMap.put(Actions.MOVE_RIGHT, List.of(KeyCode.D, KeyCode.RIGHT));
         inputMap.put(Actions.UP_DIR, List.of(KeyCode.W, KeyCode.UP));
-        inputMap.put(Actions.DOWN_DIR, List.of(KeyCode.D, KeyCode.DOWN));
+        inputMap.put(Actions.DOWN_DIR, List.of(KeyCode.S, KeyCode.DOWN));
     }
 
     private boolean actionPoll(Actions action){
@@ -37,7 +38,7 @@ public class GameController {
             return false;
         }
         for(KeyCode key : keys){
-            if(keys.contains(key)){
+            if(activeKeys.contains(key)){
               return true;
             }
         }
